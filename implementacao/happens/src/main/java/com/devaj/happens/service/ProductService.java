@@ -23,7 +23,6 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-
     public Product getById(long id) {
         Optional<Product> result = productRepository.findById(id);
 
