@@ -1,7 +1,9 @@
 package com.devaj.happens.config;
 
+import com.devaj.happens.model.Branch;
 import com.devaj.happens.model.Product;
 import com.devaj.happens.model.Stock;
+import com.devaj.happens.repository.BranchRepository;
 import com.devaj.happens.service.ProductService;
 import com.devaj.happens.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
     @Autowired
     private StockService stockService;
 
+    @Autowired
+    private BranchRepository branchRepository;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         List<Product> products = productService.listAll();
@@ -28,6 +33,19 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
             this.createProduct("Produto1", "Descrição", "1234", 100.0, 50);
             this.createProduct("Produto2", "Descrição", "5678", 200.0, 120);
         }
+
+        List<Branch> branches = branchRepository.findAll();
+
+        if(branches.isEmpty()){
+            this.createBranche("Filial1");
+            this.createBranche("Filial2");
+        }
+    }
+
+    private void createBranche(String name) {
+        Branch newBranch = new Branch(name);
+
+        branchRepository.save(newBranch);
     }
 
     public void createProduct(String name, String description, String barCode, Double price, Integer amount){

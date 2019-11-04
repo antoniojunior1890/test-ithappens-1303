@@ -37,10 +37,4 @@ public class StockServiceTest {
 
         assertThat(stocks.size()).isEqualTo(3);
     }
-
-
-
 }
-//    Stock newStock = new Stock(product, amount);
-//
-//        stockService.save(newStock);
