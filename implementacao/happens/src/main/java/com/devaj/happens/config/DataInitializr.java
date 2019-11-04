@@ -35,7 +35,6 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
         Product newProduct = new Product(name, description, barCode, price);
 
         productService.save(newProduct);
-
         this.createStock(newProduct, amount);
     }
 

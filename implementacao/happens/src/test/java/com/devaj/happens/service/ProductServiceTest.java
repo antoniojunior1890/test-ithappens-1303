@@ -22,7 +22,7 @@ public class ProductServiceTest {
         Product newProduct = new Product(null, "ProdutoTeste", "Descrição", "0000", 100.0);
         Product createdProduct= productService.save(newProduct);
 
-        assertThat(createdProduct.getId()).isEqualTo(5L);
+        assertThat(createdProduct.getId()).isEqualTo(3L);
     }
 
     @Test
