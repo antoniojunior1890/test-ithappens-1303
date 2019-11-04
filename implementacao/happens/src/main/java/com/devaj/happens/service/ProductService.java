@@ -1,11 +1,13 @@
 package com.devaj.happens.service;
 
+import com.devaj.happens.exception.NotFoundException;
 import com.devaj.happens.model.Product;
 import com.devaj.happens.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -22,4 +24,9 @@ public class ProductService {
     }
 
 
+    public Product getById(long id) {
+        Optional<Product> result = productRepository.findById(id);
+
+        return result.orElseThrow(()-> new NotFoundException("Produto não encontrado com id "+id));
+    }
 }

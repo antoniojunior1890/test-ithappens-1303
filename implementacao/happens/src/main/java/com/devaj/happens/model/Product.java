@@ -39,4 +39,5 @@ public class Product implements Serializable {
         this.barCode = barCode;
         this.price = price;
     }
+
 }
