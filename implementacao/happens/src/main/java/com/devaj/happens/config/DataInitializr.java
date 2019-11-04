@@ -36,8 +36,8 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
         List<Product> products = productService.listAll();
 
         if(products.isEmpty()){
-            this.createProduct("Produto 1", "Descrição", "1234", 100.0, 50);
-            this.createProduct("Produto 2", "Descrição", "5678", 200.0, 120);
+            this.createProduct("Produto 1", "Descrição", "1234", 100.0);
+            this.createProduct("Produto 2", "Descrição", "5678", 200.0);
         }
 
         List<Branch> branches = branchRepository.findAll();
@@ -45,6 +45,16 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
         if(branches.isEmpty()){
             this.createBranche("Filial 1");
             this.createBranche("Filial 2");
+        }
+
+
+        List<Stock> stocks = stockService.listAll();
+
+        if(stocks.isEmpty()){
+            this.createStock(1L, 1L, 50);
+            this.createStock(1L, 2L, 510);
+            this.createStock(2L, 1L, 10);
+            this.createStock(2L, 2L, 450);
         }
 
         List<Client> clients = clientRepository.findAll();
@@ -80,17 +90,35 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
         branchRepository.save(newBranch);
     }
 
-    public void createProduct(String name, String description, String barCode, Double price, Integer amount){
+    public void createProduct(String name, String description, String barCode, Double price){
 
         Product newProduct = new Product(name, description, barCode, price);
 
         productService.save(newProduct);
-        this.createStock(newProduct, amount);
     }
 
-    public void createStock(Product product, Integer amount){
+    public void createStock(Long productId, Long branchId, Integer amount){
 
-        Stock newStock = new Stock(product, amount);
+        Product product = new Product();
+        product.setId(productId);
+
+        Branch branch = new Branch();
+        branch.setId(branchId);
+
+
+
+
+//        Product product = new Product();
+//        product.setId(1L);
+//
+//        Branch branch = new Branch();
+//        branch.setId(1L);
+
+        Stock newStock = new Stock();
+        newStock.setAmount(amount);
+        newStock.setBranch(branch);
+        newStock.setProduct(product);
+
 
         stockService.save(newStock);
     }

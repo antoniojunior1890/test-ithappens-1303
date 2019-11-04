@@ -21,15 +21,24 @@ public class Stock implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+//    @OneToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "product_id", nullable = false)
+//    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "branch_id")
+    Branch branch;
 
     @Column(nullable = false)
     private Integer amount;
 
-    public Stock(Product product, Integer amount) {
+    public Stock(Product product, Branch branch, Integer amount) {
         this.product = product;
+        this.branch = branch;
         this.amount = amount;
     }
 }

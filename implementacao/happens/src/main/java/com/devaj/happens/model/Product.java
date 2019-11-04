@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,6 +33,9 @@ public class Product implements Serializable {
 
     @Column(nullable = false)
     private double price;
+
+    @OneToMany(mappedBy = "product")
+    List<Stock> stocks;
 
     public Product(String name, String description, String barCode, Double price) {
         this.name = name;

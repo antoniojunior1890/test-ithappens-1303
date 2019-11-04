@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +24,9 @@ public class Branch implements Serializable {
 
     @Column(length = 20, nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "branch")
+    List<Stock> stocks;
 
     public Branch(String name) {
         this.name  = name;
