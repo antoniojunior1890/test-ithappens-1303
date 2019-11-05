@@ -33,6 +33,7 @@ public class SolicitationServiceTest {
         newSolicitation.setBranch(branch);
         newSolicitation.setUser(user);
         newSolicitation.setClient(client);
+        newSolicitation.setNote("Teste Solicitação");
 
         Solicitation createdSolicitation = solicitationService.save(newSolicitation);
 
