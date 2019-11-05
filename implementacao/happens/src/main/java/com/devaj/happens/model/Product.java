@@ -1,9 +1,12 @@
 package com.devaj.happens.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,6 +36,12 @@ public class Product implements Serializable {
 
     @Column(nullable = false)
     private double price;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "solicitation_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Solicitation solicitation;
 
     public Product(String name, String description, String barCode, Double price) {
         this.name = name;
