@@ -1,0 +1,20 @@
+package com.devaj.happens.repository;
+
+import com.devaj.happens.model.Item;
+import com.devaj.happens.model.Solicitation;
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface ItemRepository extends JpaRepository<Item, Long> {
+
+    @Query("select i from Item i join fetch i.solicitation  where i.solicitation.id = :id")
+    @EntityGraph(attributePaths = {"stock", "stock.branch"})
+    List<Item> findAllByIdSolicitation(@Param("id") long id);
+
+}

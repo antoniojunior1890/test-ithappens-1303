@@ -28,4 +28,8 @@ public class SolicitationService {
 
         return result.orElseThrow(()-> new NotFoundException("Solicitação não encontrado com id "+id));
     }
+
+    public boolean existsById(Long id) {
+        return solicitationRepository.existsById(id);
+    }
 }

@@ -20,5 +20,4 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
     }
-
 }

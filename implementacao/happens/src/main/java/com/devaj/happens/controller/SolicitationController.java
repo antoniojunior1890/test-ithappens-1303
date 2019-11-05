@@ -1,9 +1,14 @@
 package com.devaj.happens.controller;
 
+import com.devaj.happens.exception.NotFoundException;
+import com.devaj.happens.model.Item;
 import com.devaj.happens.model.Product;
 import com.devaj.happens.model.Solicitation;
+import com.devaj.happens.model.Stock;
+import com.devaj.happens.service.ItemService;
 import com.devaj.happens.service.ProductService;
 import com.devaj.happens.service.SolicitationService;
+import com.devaj.happens.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +25,10 @@ public class SolicitationController {
     private SolicitationService solicitationService;
 
     @Autowired
-    private ProductService productService;
+    private ItemService itemService;
+
+    @Autowired
+    private StockService stockService;
 
     @PostMapping
     public ResponseEntity<Solicitation> create(@RequestBody @Valid Solicitation solicitation){
@@ -40,16 +48,39 @@ public class SolicitationController {
         return ResponseEntity.ok(solicitation);
     }
 
-    @PostMapping("/{id}/product")
-    public ResponseEntity<Product> createProduct(@PathVariable (value = "id") Long id,
-                                 @Valid @RequestBody Product productRequest) {
+    @PostMapping("/{id}/item")
+    public ResponseEntity<Item> createProduct(@PathVariable (value = "id") Long id,
+                                 @Valid @RequestBody Item itemRequest) {
+
+        if(!solicitationService.existsById(id)){
+            throw new NotFoundException("Não encontrado Solicitação para id "+ id);
+        }
+
+        Stock stock = stockService.getById(itemRequest.getStock().getId());
 
         Solicitation solicitation = solicitationService.getById(id);
-        productRequest.setSolicitation(solicitation);
 
-        Product createdProduct = productService.save(productRequest);
+        if(!solicitation.getBranch().getId().equals(stock.getBranch().getId())){
+            throw new NotFoundException("Este produto não pertence a esta filial");
+        }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
+        itemRequest.setSolicitation(solicitation);
 
+        Item createdItem = itemService.save(itemRequest);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdItem);
+
+    }
+
+    @GetMapping(path = {"/{id}/item"})
+    public ResponseEntity<List<Item>> getItemById(@PathVariable long id){
+
+        if(!solicitationService.existsById(id)) {
+            throw new NotFoundException("Não encontrado Solicitação para id "+ id);
+        }
+
+        List<Item> items = itemService.listAllByIdSolicitation(id);
+
+        return ResponseEntity.ok(items);
     }
 }
