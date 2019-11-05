@@ -3,8 +3,10 @@ package com.devaj.happens.config;
 import com.devaj.happens.model.*;
 import com.devaj.happens.repository.BranchRepository;
 import com.devaj.happens.repository.ClientRepository;
+import com.devaj.happens.repository.SolicitationRepository;
 import com.devaj.happens.repository.UserRepository;
 import com.devaj.happens.service.ProductService;
+import com.devaj.happens.service.SolicitationService;
 import com.devaj.happens.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -30,6 +32,9 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private SolicitationService solicitationService;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -70,6 +75,27 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
             this.createUser("Usuario 1", "00001");
             this.createUser("Usuario 2", "00002");
         }
+
+        List<Solicitation> solicitations = solicitationService.listAll();
+
+        if(solicitations.isEmpty()){
+            this.createSolicitation(1L, 2L, 2L, "Local de Entrega");
+        }
+
+    }
+
+    private void createSolicitation(Long branchId, Long userId, Long clientId, String note) {
+        Branch branch = new Branch();
+        branch.setId(branchId);
+
+        User user = new User();
+        user.setId(userId);
+
+        Client client = new Client();
+        client.setId(clientId);
+
+        Solicitation solicitation = new Solicitation(branch, user, client, note);
+        solicitationService.save(solicitation);
     }
 
     private void createUser(String name, String registration) {
@@ -104,15 +130,6 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
 
         Branch branch = new Branch();
         branch.setId(branchId);
-
-
-
-
-//        Product product = new Product();
-//        product.setId(1L);
-//
-//        Branch branch = new Branch();
-//        branch.setId(1L);
 
         Stock newStock = new Stock();
         newStock.setAmount(amount);

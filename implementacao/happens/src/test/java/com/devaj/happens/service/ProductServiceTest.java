@@ -16,14 +16,14 @@ public class ProductServiceTest {
     @Autowired
     private ProductService productService;
 
-//    @Test
-//    public void saveTest(){
-//
-//        Product newProduct = new Product(null, "ProdutoTeste", "Descrição", "0000", 100.0);
-//        Product createdProduct= productService.save(newProduct);
-//
-//        assertThat(createdProduct.getId()).isEqualTo(3L);
-//    }
+    @Test
+    public void saveTest(){
+
+        Product newProduct = new Product( "ProdutoTeste", "Descrição", "0000", 100.0);
+        Product createdProduct= productService.save(newProduct);
+
+        assertThat(createdProduct.getId()).isEqualTo(3L);
+    }
 
     @Test
     void listAllTest() {

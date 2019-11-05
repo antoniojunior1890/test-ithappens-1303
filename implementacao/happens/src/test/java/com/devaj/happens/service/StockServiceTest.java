@@ -36,13 +36,13 @@ public class StockServiceTest {
 
         Stock createdStock= stockService.save(newStock);
 
-        assertThat(createdStock.getId()).isEqualTo(1L);
+        assertThat(createdStock.getId()).isEqualTo(5L);
     }
 
     @Test
     void listAllTest() {
         List<Stock> stocks = stockService.listAll();
 
-        assertThat(stocks.size()).isEqualTo(1);
+        assertThat(stocks.size()).isEqualTo(5);
     }
 }

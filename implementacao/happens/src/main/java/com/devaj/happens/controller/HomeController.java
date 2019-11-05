@@ -10,6 +10,7 @@ public class HomeController {
 
     @GetMapping
     public String testHome(){
+        System.out.println("oi");
         return "Ola happens";
     }
 }
