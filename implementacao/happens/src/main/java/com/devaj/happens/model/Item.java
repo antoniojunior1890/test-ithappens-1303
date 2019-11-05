@@ -39,4 +39,11 @@ public class Item  implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Solicitation solicitation;
+
+    public Item(Stock stock, Integer amount, double price, Solicitation solicitation) {
+        this.stock = stock;
+        this.amount = amount;
+        this.price = price;
+        this.solicitation = solicitation;
+    }
 }

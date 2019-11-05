@@ -5,6 +5,7 @@ import com.devaj.happens.repository.BranchRepository;
 import com.devaj.happens.repository.ClientRepository;
 import com.devaj.happens.repository.SolicitationRepository;
 import com.devaj.happens.repository.UserRepository;
+import com.devaj.happens.service.ItemService;
 import com.devaj.happens.service.ProductService;
 import com.devaj.happens.service.SolicitationService;
 import com.devaj.happens.service.StockService;
@@ -35,6 +36,9 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
 
     @Autowired
     private SolicitationService solicitationService;
+
+    @Autowired
+    private ItemService itemService;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -82,6 +86,25 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
             this.createSolicitation(1L, 2L, 2L, "Local de Entrega");
         }
 
+        List<Item> items = itemService.listAllByIdSolicitation(1L);
+
+        if(items.isEmpty()){
+            this.createItem(1L, 55, 19.2, 1L);
+            this.createItem(3L, 67, 20.2, 1L);
+        }
+
+    }
+
+    private void createItem(Long stockId, Integer amount, double price, Long solicitationId) {
+        Stock stock = new Stock();
+        stock.setId(stockId);
+
+        Solicitation solicitation = new Solicitation();
+        solicitation.setId(solicitationId);
+
+        Item item = new Item(stock, amount, price, solicitation);
+
+        itemService.save(item);
     }
 
     private void createSolicitation(Long branchId, Long userId, Long clientId, String note) {
