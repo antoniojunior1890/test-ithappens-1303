@@ -90,7 +90,7 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
 
         if(items.isEmpty()){
             this.createItem(1L, 55, 19.2, 1L);
-            this.createItem(3L, 67, 20.2, 1L);
+//            this.createItem(3L, 67, 20.2, 1L);
         }
 
     }
