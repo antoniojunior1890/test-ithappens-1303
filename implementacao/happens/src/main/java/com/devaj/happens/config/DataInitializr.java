@@ -1,6 +1,7 @@
 package com.devaj.happens.config;
 
 import com.devaj.happens.model.*;
+import com.devaj.happens.model.enums.TypeSolicitation;
 import com.devaj.happens.repository.BranchRepository;
 import com.devaj.happens.repository.ClientRepository;
 import com.devaj.happens.repository.SolicitationRepository;
@@ -83,7 +84,7 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
         List<Solicitation> solicitations = solicitationService.listAll();
 
         if(solicitations.isEmpty()){
-            this.createSolicitation(1L, 2L, 2L, "Local de Entrega");
+            this.createSolicitation(1L, 2L, 2L, "Local de Entrega", TypeSolicitation.ENTRADA);
         }
 
         List<Item> items = itemService.listAllByIdSolicitation(1L);
@@ -103,7 +104,7 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
         itemService.save(item, solicitationId);
     }
 
-    private void createSolicitation(Long branchId, Long userId, Long clientId, String note) {
+    private void createSolicitation(Long branchId, Long userId, Long clientId, String note, TypeSolicitation typeSolicitation) {
         Branch branch = new Branch();
         branch.setId(branchId);
 
@@ -113,7 +114,7 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
         Client client = new Client();
         client.setId(clientId);
 
-        Solicitation solicitation = new Solicitation(branch, user, client, note);
+        Solicitation solicitation = new Solicitation(branch, user, client, note, typeSolicitation);
         solicitationService.save(solicitation);
     }
 

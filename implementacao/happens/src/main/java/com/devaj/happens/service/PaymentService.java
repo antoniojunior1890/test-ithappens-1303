@@ -4,6 +4,7 @@ import com.devaj.happens.exception.NotFoundException;
 import com.devaj.happens.model.*;
 import com.devaj.happens.model.enums.PaymentMethod;
 import com.devaj.happens.model.enums.Status;
+import com.devaj.happens.model.enums.TypeSolicitation;
 import com.devaj.happens.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class PaymentService {
 
         try {
             items.forEach( item -> {
-                if(degradeStock(item, stocks)){
+                if(processPayment(item, stocks, solicitation)){
                     updateStatusItem(item, Status.PROCESSADO);
                 }
             });
@@ -45,12 +46,11 @@ public class PaymentService {
             payment.setSolicitation(solicitation);
             payment.setPaymentMethod(paymentMethod);
 
-            paymentRepository.save(payment);
+            return paymentRepository.save(payment);
         }catch (Exception e){
             throw new NotFoundException(e.getMessage());
         }
 
-        return null;
     }
 
 
@@ -59,7 +59,7 @@ public class PaymentService {
         return stockService.getByIdBranch(branch.getId());
     }
 
-    private Boolean degradeStock(Item item, List<Stock> stocks){
+    private Boolean processPayment(Item item, List<Stock> stocks, Solicitation solicitation){
         Stock stockExist = stocks.stream()
                 .filter(s->  s.getId().equals(item.getStock().getId()))
                 .findAny()
@@ -67,10 +67,13 @@ public class PaymentService {
 
         if(stockExist != null && item.getStatus().equals(Status.ATIVO)) {
             return stockService.findById(stockExist.getId()).map(s -> {
-                s.setAmount(s.getAmount() -  item.getAmount());
-                if(s.getAmount() < 0){
-                    throw  new IllegalArgumentException("Saldo insuficiente");
+
+                if(solicitation.getTypeSolicitation().equals(TypeSolicitation.ENTRADA)){
+                    incrementStock(s, item);
+                }else{
+                    decreaseStock(s, item);
                 }
+
                 stockService.save(s);
                 return true;
             }).orElseThrow(() -> new NotFoundException("Item não encontrado"));
@@ -81,6 +84,17 @@ public class PaymentService {
             }
         }
         return false;
+    }
+
+    private void incrementStock(Stock stock, Item item) {
+        stock.setAmount(stock.getAmount() +  item.getAmount());
+    }
+
+    private void decreaseStock(Stock stock, Item item) {
+        stock.setAmount(stock.getAmount() -  item.getAmount());
+        if(stock.getAmount() < 0){
+            throw  new IllegalArgumentException("Saldo insuficiente");
+        }
     }
 
     public void updateStatusItem(Item item, Status status){

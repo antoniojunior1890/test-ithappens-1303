@@ -59,7 +59,7 @@ public class SolicitationController {
     }
 
     @DeleteMapping("/{solicitationId}/item/{itemId}")
-    public ResponseEntity<?> deleteItemSolicitation(@PathVariable("solicitationId") Long solicitationId,
+    public ResponseEntity<?> cancelItemSolicitation(@PathVariable("solicitationId") Long solicitationId,
                                                     @PathVariable("itemId") Long itemId) {
         itemService.deleteItemBySolicitation(solicitationId, itemId);
         return ResponseEntity.ok().build();

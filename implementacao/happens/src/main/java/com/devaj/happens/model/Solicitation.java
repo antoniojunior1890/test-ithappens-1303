@@ -1,5 +1,6 @@
 package com.devaj.happens.model;
 
+import com.devaj.happens.model.enums.TypeSolicitation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,10 +46,16 @@ public class Solicitation implements Serializable {
     @Column(length = 50, nullable = false)
     private String note;
 
-    public Solicitation(Branch branch, User user, Client client, String note) {
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private TypeSolicitation typeSolicitation;
+
+    public Solicitation(Branch branch, User user, Client client, String note, TypeSolicitation typeSolicitation) {
         this.branch = branch;
         this.user = user;
         this.client = client;
         this.note = note;
+        this.typeSolicitation = typeSolicitation;
     }
+
 }
