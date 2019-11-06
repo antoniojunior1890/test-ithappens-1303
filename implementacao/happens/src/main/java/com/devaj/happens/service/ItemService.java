@@ -7,6 +7,7 @@ import com.devaj.happens.model.Stock;
 import com.devaj.happens.model.enums.Status;
 import com.devaj.happens.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,7 +70,14 @@ public class ItemService {
     }
 
     public List<Item> listAllByIdSolicitation(long id) {
-        return itemRepository.findAllByIdSolicitation(id);
+        return itemRepository.findAllBySolicitationId(id);
     }
 
+    public void deleteItemBySolicitation(Long solicitationId, Long itemId) {
+        itemRepository.findByIdAndSolicitationId( itemId, solicitationId).map(item -> {
+            item.setStatus(Status.CANCELADO);
+            itemRepository.save(item);
+            return true;
+        }).orElseThrow(() -> new NotFoundException("Item não encontrado"));
+    }
 }

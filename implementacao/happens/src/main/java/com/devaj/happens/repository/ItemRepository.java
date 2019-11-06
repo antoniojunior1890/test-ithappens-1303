@@ -14,8 +14,7 @@ import java.util.Optional;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    @Query("select i from Item i join fetch i.solicitation  where i.solicitation.id = :id")
-    @EntityGraph(attributePaths = {"stock", "stock.branch"})
-    List<Item> findAllByIdSolicitation(@Param("id") long id);
+    Optional<Item> findByIdAndSolicitationId( Long itemId, Long solicitationId);
 
+    List<Item> findAllBySolicitationId(Long id);
 }

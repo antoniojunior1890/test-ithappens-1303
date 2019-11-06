@@ -58,6 +58,13 @@ public class SolicitationController {
 
     }
 
+    @DeleteMapping("/{solicitationId}/item/{itemId}")
+    public ResponseEntity<?> deleteItemSolicitation(@PathVariable("solicitationId") Long solicitationId,
+                                                    @PathVariable("itemId") Long itemId) {
+        itemService.deleteItemBySolicitation(solicitationId, itemId);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping(path = {"/{id}/item"})
     public ResponseEntity<List<Item>> getItemById(@PathVariable long id){
 
