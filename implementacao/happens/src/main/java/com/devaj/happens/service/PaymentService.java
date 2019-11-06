@@ -47,7 +47,7 @@ public class PaymentService {
 
             paymentRepository.save(payment);
         }catch (Exception e){
-
+            throw new NotFoundException(e.getMessage());
         }
 
         return null;
@@ -68,10 +68,17 @@ public class PaymentService {
         if(stockExist != null && item.getStatus().equals(Status.ATIVO)) {
             return stockService.findById(stockExist.getId()).map(s -> {
                 s.setAmount(s.getAmount() -  item.getAmount());
+                if(s.getAmount() < 0){
+                    throw  new IllegalArgumentException("Saldo insuficiente");
+                }
                 stockService.save(s);
                 return true;
             }).orElseThrow(() -> new NotFoundException("Item não encontrado"));
 
+        }else {
+            if(!item.getStatus().equals(Status.ATIVO)){
+                throw  new IllegalArgumentException("Item não esta mais ativo");
+            }
         }
         return false;
     }
