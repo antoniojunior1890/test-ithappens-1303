@@ -4,6 +4,7 @@ import com.devaj.happens.exception.NotFoundException;
 import com.devaj.happens.model.Item;
 import com.devaj.happens.model.Solicitation;
 import com.devaj.happens.model.Stock;
+import com.devaj.happens.model.enums.Status;
 import com.devaj.happens.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,7 @@ public class ItemService {
         }else {
 
             item.setSolicitation(solicitation);
+            item.setStatus(Status.ATIVO);
 
         }
         return itemRepository.save(item);

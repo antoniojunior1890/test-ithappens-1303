@@ -1,5 +1,6 @@
 package com.devaj.happens.model;
 
+import com.devaj.happens.model.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,6 +42,10 @@ public class Item  implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Solicitation solicitation;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private Status status;
 
     public Item(Stock stock, Integer amount, double price) {
         this.stock = stock;

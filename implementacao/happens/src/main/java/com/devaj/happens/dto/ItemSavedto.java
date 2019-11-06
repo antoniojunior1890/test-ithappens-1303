@@ -24,7 +24,7 @@ public class ItemSavedto {
     private Double price;
 
     public Item transformToItem(){
-        Item item = new Item(null, this.stock, this.amount, this.price, null);
+        Item item = new Item(null, this.stock, this.amount, this.price, null, null);
 
         return item;
     }
