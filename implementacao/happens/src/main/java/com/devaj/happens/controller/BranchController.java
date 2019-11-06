@@ -1,7 +1,6 @@
 package com.devaj.happens.controller;
 
 import com.devaj.happens.model.Stock;
-import com.devaj.happens.service.BranchService;
 import com.devaj.happens.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

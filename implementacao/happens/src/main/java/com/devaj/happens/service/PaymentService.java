@@ -1,5 +1,6 @@
 package com.devaj.happens.service;
 
+import com.devaj.happens.exception.InternalErrorException;
 import com.devaj.happens.exception.NotFoundException;
 import com.devaj.happens.model.*;
 import com.devaj.happens.model.enums.PaymentMethod;
@@ -48,7 +49,7 @@ public class PaymentService {
 
             return paymentRepository.save(payment);
         }catch (Exception e){
-            throw new NotFoundException(e.getMessage());
+            throw new InternalErrorException(e.getMessage());
         }
 
     }

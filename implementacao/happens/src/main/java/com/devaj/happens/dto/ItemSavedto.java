@@ -3,13 +3,11 @@ package com.devaj.happens.dto;
 import com.devaj.happens.model.Item;
 import com.devaj.happens.model.Stock;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@Setter
 public class ItemSavedto {
 
     @NotNull
