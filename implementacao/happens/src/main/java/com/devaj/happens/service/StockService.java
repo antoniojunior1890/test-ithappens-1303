@@ -35,4 +35,7 @@ public class StockService {
         return stockRepository.getByIdBranch(id).orElseThrow(()-> new NotFoundException("Não encontrado estoque para id "+id));
     }
 
+    public Optional<Stock> findById(Long id) {
+        return stockRepository.findById(id);
+    }
 }

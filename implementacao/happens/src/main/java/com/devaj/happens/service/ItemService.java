@@ -51,7 +51,7 @@ public class ItemService {
                 .findAny()
                 .orElse(null);
 
-        if(itemExist != null){
+        if(itemExist != null ){
             return itemRepository.findById(itemExist.getId()).map(i -> {
                 i.setAmount( i.getAmount() + item.getAmount());
                 return itemRepository.save(i);
@@ -62,6 +62,11 @@ public class ItemService {
             item.setStatus(Status.ATIVO);
 
         }
+        return itemRepository.save(item);
+    }
+
+    public Item update(Item item , Status status) {
+        item.setStatus(status);
         return itemRepository.save(item);
     }
 

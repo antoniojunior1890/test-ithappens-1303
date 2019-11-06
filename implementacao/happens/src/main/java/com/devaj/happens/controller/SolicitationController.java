@@ -1,15 +1,12 @@
 package com.devaj.happens.controller;
 
 import com.devaj.happens.dto.ItemSavedto;
+import com.devaj.happens.dto.PaymentMethodSavedto;
 import com.devaj.happens.exception.NotFoundException;
-import com.devaj.happens.model.Item;
-import com.devaj.happens.model.Product;
-import com.devaj.happens.model.Solicitation;
-import com.devaj.happens.model.Stock;
-import com.devaj.happens.service.ItemService;
-import com.devaj.happens.service.ProductService;
-import com.devaj.happens.service.SolicitationService;
-import com.devaj.happens.service.StockService;
+import com.devaj.happens.model.*;
+import com.devaj.happens.model.enums.PaymentMethod;
+import com.devaj.happens.service.*;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +24,9 @@ public class SolicitationController {
 
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     @PostMapping
     public ResponseEntity<Solicitation> create(@RequestBody @Valid Solicitation solicitation){
@@ -75,5 +75,17 @@ public class SolicitationController {
         List<Item> items = itemService.listAllByIdSolicitation(id);
 
         return ResponseEntity.ok(items);
+    }
+
+    @PostMapping("/{solicitationId}/payment")
+    public ResponseEntity<Payment> createPaymentSolicitation(@PathVariable (value = "solicitationId") Long solicitationId,
+                                                             @RequestBody @Valid PaymentMethodSavedto paymentMethodSavedto){
+
+        PaymentMethod paymentMethod = paymentMethodSavedto.transformToPaymentMethod();
+
+        Payment createdPayment = paymentService.save(solicitationId, paymentMethod);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdPayment);
+
     }
 }

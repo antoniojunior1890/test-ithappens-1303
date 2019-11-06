@@ -28,7 +28,7 @@ public class Item  implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stock_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+//    @JsonIgnore
     private Stock stock;
 
     @Column(nullable = false)

@@ -16,5 +16,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Optional<Item> findByIdAndSolicitationId( Long itemId, Long solicitationId);
 
+    @EntityGraph(attributePaths = {"stock"})
     List<Item> findAllBySolicitationId(Long id);
 }
