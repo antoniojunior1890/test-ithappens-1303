@@ -1,5 +1,6 @@
 package com.devaj.happens.controller;
 
+import com.devaj.happens.dto.ItemSavedto;
 import com.devaj.happens.exception.NotFoundException;
 import com.devaj.happens.model.Item;
 import com.devaj.happens.model.Product;
@@ -27,9 +28,6 @@ public class SolicitationController {
     @Autowired
     private ItemService itemService;
 
-    @Autowired
-    private StockService stockService;
-
     @PostMapping
     public ResponseEntity<Solicitation> create(@RequestBody @Valid Solicitation solicitation){
 
@@ -50,23 +48,11 @@ public class SolicitationController {
 
     @PostMapping("/{id}/item")
     public ResponseEntity<Item> createProduct(@PathVariable (value = "id") Long id,
-                                 @Valid @RequestBody Item itemRequest) {
+                                 @Valid @RequestBody ItemSavedto itemSavedto) {
 
-        if(!solicitationService.existsById(id)){
-            throw new NotFoundException("Não encontrado Solicitação para id "+ id);
-        }
+        Item itemRequest = itemSavedto.transformToItem();
 
-        Stock stock = stockService.getById(itemRequest.getStock().getId());
-
-        Solicitation solicitation = solicitationService.getById(id);
-
-        if(!solicitation.getBranch().getId().equals(stock.getBranch().getId())){
-            throw new NotFoundException("Este produto não pertence a esta filial");
-        }
-
-        itemRequest.setSolicitation(solicitation);
-
-        Item createdItem = itemService.save(itemRequest);
+        Item createdItem = itemService.save(itemRequest, id);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdItem);
 

@@ -89,8 +89,7 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
         List<Item> items = itemService.listAllByIdSolicitation(1L);
 
         if(items.isEmpty()){
-            this.createItem(1L, 55, 19.2, 1L);
-//            this.createItem(3L, 67, 20.2, 1L);
+            this.createItem(1L, 5, 19.2, 1L);
         }
 
     }
@@ -99,12 +98,9 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
         Stock stock = new Stock();
         stock.setId(stockId);
 
-        Solicitation solicitation = new Solicitation();
-        solicitation.setId(solicitationId);
+        Item item = new Item(stock, amount, price);
 
-        Item item = new Item(stock, amount, price, solicitation);
-
-        itemService.save(item);
+        itemService.save(item, solicitationId);
     }
 
     private void createSolicitation(Long branchId, Long userId, Long clientId, String note) {

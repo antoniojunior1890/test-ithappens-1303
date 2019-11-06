@@ -27,10 +27,10 @@ public class ItemServiceTest {
         Item newItem = new Item();
         newItem.setSolicitation(solicitation);
         newItem.setStock(stock);
-        newItem.setAmount(65);
+        newItem.setAmount(2);
         newItem.setPrice(65.9);
 
-        Item createdItem = itemService.save(newItem);
+        Item createdItem = itemService.save(newItem, 1L);
 
         assertThat(createdItem.getId()).isEqualTo(2L);
 

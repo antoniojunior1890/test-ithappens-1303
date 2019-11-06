@@ -24,8 +24,10 @@ public class Item  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "stock_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stock_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Stock stock;
 
     @Column(nullable = false)
@@ -40,10 +42,9 @@ public class Item  implements Serializable {
     @JsonIgnore
     private Solicitation solicitation;
 
-    public Item(Stock stock, Integer amount, double price, Solicitation solicitation) {
+    public Item(Stock stock, Integer amount, double price) {
         this.stock = stock;
         this.amount = amount;
         this.price = price;
-        this.solicitation = solicitation;
     }
 }
