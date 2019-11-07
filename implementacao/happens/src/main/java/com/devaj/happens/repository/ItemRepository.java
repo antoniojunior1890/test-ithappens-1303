@@ -18,4 +18,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @EntityGraph(attributePaths = {"stock"})
     List<Item> findAllBySolicitationId(Long id);
+
+    @Override
+    @EntityGraph(attributePaths = {"stock","stock.branch"})
+    Optional<Item> findById(Long aLong);
 }

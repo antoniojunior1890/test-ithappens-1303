@@ -16,9 +16,6 @@ import java.util.List;
 public class BranchController {
 
     @Autowired
-    private BranchService branchService;
-
-    @Autowired
     private StockService stockService;
 
 

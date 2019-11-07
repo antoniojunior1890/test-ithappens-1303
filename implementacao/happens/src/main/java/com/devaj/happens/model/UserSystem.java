@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity
-public class User implements Serializable {
+public class UserSystem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,7 @@ public class User implements Serializable {
     @Column(length = 20, unique = true, nullable = false)
     private String registration;
 
-    public User(String name, String registration) {
+    public UserSystem(String name, String registration) {
         this.name = name;
         this.registration = registration;
     }

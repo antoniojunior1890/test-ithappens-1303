@@ -4,8 +4,7 @@ import com.devaj.happens.model.*;
 import com.devaj.happens.model.enums.TypeSolicitation;
 import com.devaj.happens.repository.BranchRepository;
 import com.devaj.happens.repository.ClientRepository;
-import com.devaj.happens.repository.SolicitationRepository;
-import com.devaj.happens.repository.UserRepository;
+import com.devaj.happens.repository.UserSystemRepository;
 import com.devaj.happens.service.ItemService;
 import com.devaj.happens.service.ProductService;
 import com.devaj.happens.service.SolicitationService;
@@ -33,7 +32,7 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
     private ClientRepository clientRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserSystemRepository userSystemRepository;
 
     @Autowired
     private SolicitationService solicitationService;
@@ -74,9 +73,9 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
             this.createClient("Cliente 2");
         }
 
-        List<User> users = userRepository.findAll();
+        List<UserSystem> userSystems = userSystemRepository.findAll();
 
-        if(users.isEmpty()){
+        if(userSystems.isEmpty()){
             this.createUser("Usuario 1", "00001");
             this.createUser("Usuario 2", "00002");
         }
@@ -85,6 +84,7 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
 
         if(solicitations.isEmpty()){
             this.createSolicitation(1L, 2L, 2L, "Local de Entrega", TypeSolicitation.ENTRADA);
+            this.createSolicitation(1L, 2L, 2L, "Local de Entrega", TypeSolicitation.SAIDA);
         }
 
         List<Item> items = itemService.listAllByIdSolicitation(1L);
@@ -108,7 +108,7 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
         Branch branch = new Branch();
         branch.setId(branchId);
 
-        User user = new User();
+        UserSystem user = new UserSystem();
         user.setId(userId);
 
         Client client = new Client();
@@ -119,9 +119,9 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
     }
 
     private void createUser(String name, String registration) {
-        User newUser = new User(name, registration);
+        UserSystem newUser = new UserSystem(name, registration);
 
-        userRepository.save(newUser);
+        userSystemRepository.save(newUser);
     }
 
     private void createClient(String name) {
@@ -144,18 +144,18 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
     }
 
     public void createStock(Long productId, Long branchId, Integer amount){
-
+//        Product product = productService.getById(1);
         Product product = new Product();
         product.setId(productId);
 
-        Branch branch = new Branch();
-        branch.setId(branchId);
+        Branch branch = branchRepository.findById(branchId).get();
+//        Branch branch = new Branch();
+//        branch.setId(branchId);
 
         Stock newStock = new Stock();
         newStock.setAmount(amount);
         newStock.setBranch(branch);
         newStock.setProduct(product);
-
 
         stockService.save(newStock);
     }

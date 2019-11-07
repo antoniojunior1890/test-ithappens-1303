@@ -35,7 +35,7 @@ public class Solicitation implements Serializable {
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private User user;
+    private UserSystem user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
@@ -50,7 +50,7 @@ public class Solicitation implements Serializable {
     @Column(length = 20, nullable = false)
     private TypeSolicitation typeSolicitation;
 
-    public Solicitation(Branch branch, User user, Client client, String note, TypeSolicitation typeSolicitation) {
+    public Solicitation(Branch branch, UserSystem user, Client client, String note, TypeSolicitation typeSolicitation) {
         this.branch = branch;
         this.user = user;
         this.client = client;

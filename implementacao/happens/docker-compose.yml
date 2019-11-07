@@ -1,0 +1,29 @@
+version: '3'
+services:
+  docker-postgres:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=changeme
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  docker-app:
+    image: antoniojunior/happens
+    ports:
+      - "8080:8080"
+    depends_on:
+      - docker-postgres
+
+  docker-pgadmin4:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: happens@happens.com
+      PGADMIN_DEFAULT_PASSWORD: happens
+    volumes:
+      - ./pgadmin-data:/var/lib/postgresql/data
+    ports:
+      - 80:80

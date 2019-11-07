@@ -26,6 +26,8 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
+/postgres-data/
+/pgadmin-data/
 
 ### VS Code ###
 .vscode/

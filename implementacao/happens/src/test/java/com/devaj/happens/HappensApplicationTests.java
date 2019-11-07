@@ -7,8 +7,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 class HappensApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+//	@Test
+//	void contextLoads() {
+//	}
 
 }

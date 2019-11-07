@@ -1,6 +1,7 @@
 package com.devaj.happens.service;
 
 import com.devaj.happens.exception.NotFoundException;
+import com.devaj.happens.model.Branch;
 import com.devaj.happens.model.Item;
 import com.devaj.happens.model.Solicitation;
 import com.devaj.happens.model.Stock;
@@ -52,17 +53,18 @@ public class ItemService {
                 .orElse(null);
 
         if(itemExist != null ){
-            return itemRepository.findById(itemExist.getId()).map(i -> {
-                i.setAmount( i.getAmount() + item.getAmount());
-                return itemRepository.save(i);
-            }).orElseThrow(() -> new NotFoundException("Item não encontrado"));
+
+            itemExist.setAmount(itemExist.getAmount() + item.getAmount());
+            itemRepository.save(itemExist);
+            return itemRepository.findById(itemExist.getId()).get();
+
         }else {
 
             item.setSolicitation(solicitation);
             item.setStatus(Status.ATIVO);
 
+            return itemRepository.save(item);
         }
-        return itemRepository.save(item);
     }
 
     public Item update(Item item , Status status) {
