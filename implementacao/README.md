@@ -28,8 +28,6 @@ Execução:
 - $ mvn clean package -DskipTests
 - $ docker build -t antoniojunior/happens .
 - $ docker-compose up -d 
-- $ mvn clean package -DskipTests
-- $ mvn clean package -DskipTests
 
 ```
 
@@ -37,20 +35,20 @@ Execução:
 
 ### Aplicação:
 ```
-- `http://localhost:8080/swagger-ui.html`
+- URL: http://localhost:8080/swagger-ui.html
 
 ```
 ### PgAdmin:
 ```
-- **URL:** `http://localhost:80`
-- **Username:** `happens@happens.com`
-- **Password:** `happens`
+- URL: http://localhost:80
+- Username: happens@happens.com
+- Password: happens
 ```
 ### Adicionar novo server no PgAdmin:
 ```
-- **Host name/address** `docker-postgres`
-- **Port** `5432`
-- **Maintenance** `postgres`
-- **Username** `postgres`
-- **Password** `changeme`
+- Host name/address: docker-postgres
+- Port: 5432
+- Maintenance: postgres
+- Username: postgres
+- Password: changeme
 ```
