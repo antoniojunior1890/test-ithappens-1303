@@ -1,0 +1,18 @@
+1   Escrever uma consulta que retorne todos os produtos com quantidade maior ou igual a 100 : 
+    - SELECT * FROM stock WHERE amount >= 100
+
+2   Escrever uma consulta que traga todos os produtos que têm estoque para a filial de código 60
+    - SELECT * FROM stock WHERE branch_id = 60
+
+3   Escrever consulta que liste todos os campos para o domínio PedidoEstoque e ItensPedido filtrando apenas o produto de código 7993
+    - SELECT * FROM solicitation INNER JOIN item ON solicitation.id = item.solicitation_id WHERE item.stock_id = 7993
+
+4   Escrever uma consulta que liste os pedidos com suas respectivas formas de pagamento.
+    - SELECT * FROM solicitation INNER JOIN payment ON solicitation.id = payment.solicitation_id
+
+
+
+
+
+
+
