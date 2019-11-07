@@ -1,5 +1,56 @@
 ## SEU CÓDIGO DE IMPLEMENTAÇÃO AQUI NESTE DIRETÓRIO
 
-```java
-  System.out.println("Se preferir pode editar este arquivo!");
+Test Antonio itHappens
+================
+Api rest em java para estoque de produtos
+
+Tecnologias:
+-------------
+    * Java 8
+    * Spring Boot 2.2.1
+    * PostgreSQL 12
+    * H2 1.4
+    * Lombok 1.18.10
+    * Swagger2 2.9.2
+
+Execução:
+--------------
+## Requisitos:
+```
+- maven
+- docker
+- docker-compose
+```
+
+## Subir aplicação:
+```
+- $ cd /implementacao/happens
+- $ mvn clean package -DskipTests
+- $ docker build -t antoniojunior/happens .
+- $ docker-compose up -d 
+- $ mvn clean package -DskipTests
+- $ mvn clean package -DskipTests
+
+```
+
+## Utilização:
+
+### Aplicação:
+```
+- `http://localhost:8080/swagger-ui.html`
+
+```
+### PgAdmin:
+```
+- **URL:** `http://localhost:80`
+- **Username:** `happens@happens.com`
+- **Password:** `happens`
+```
+### Adicionar novo server no PgAdmin:
+```
+- **Host name/address** `docker-postgres`
+- **Port** `5432`
+- **Maintenance** `postgres`
+- **Username** `postgres`
+- **Password** `changeme`
 ```
