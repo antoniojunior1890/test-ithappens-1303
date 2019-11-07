@@ -1,6 +1,7 @@
 package com.devaj.happens.service;
 
 import com.devaj.happens.model.*;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -16,7 +17,7 @@ public class SolicitationServiceTest {
     private SolicitationService solicitationService;
 
 
-//    @Test
+    @Test
     public void saveTest(){
 
         Branch branch = new Branch();
@@ -39,7 +40,7 @@ public class SolicitationServiceTest {
         assertThat(createdSolicitation.getId()).isEqualTo(2L);
     }
 
-//    @Test
+    @Test
     void listAllTest() {
         List<Solicitation> solicitations = solicitationService.listAll();
 

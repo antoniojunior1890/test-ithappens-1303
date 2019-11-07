@@ -21,7 +21,7 @@ public class StockServiceTest {
     @Autowired
     private ProductService productService;
 
-//    @Test
+    @Test
     public void saveTest(){
         Product product = new Product();
         product.setId(1L);
@@ -39,7 +39,7 @@ public class StockServiceTest {
         assertThat(createdStock.getId()).isEqualTo(5L);
     }
 
-//    @Test
+    @Test
     void listAllTest() {
         List<Stock> stocks = stockService.listAll();
 

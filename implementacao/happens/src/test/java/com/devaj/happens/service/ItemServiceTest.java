@@ -16,7 +16,7 @@ public class ItemServiceTest {
     @Autowired
     private ItemService itemService;
 
-//    @Test
+    @Test
     public void saveTest(){
         Stock stock = new Stock();
         stock.setId(3L);
@@ -36,7 +36,7 @@ public class ItemServiceTest {
 
     }
 
-//    @Test
+    @Test
     void listAllBySolicitationTest() {
         List<Item> items = itemService.listAllByIdSolicitation(1L);
         assertThat(items.size()).isEqualTo(2);
